@@ -5,9 +5,8 @@
 
 // function definition
 
-// This function takes in 80 pieces of rms value
-// each is calculated by 200 samples.
-// This function should use this value
+// This function takes in 80 pieces of rms value each
+// is calculated by 200 samples. This function should use this value
 // to recalculate 8 pieces of  fast decibel value
 // To do so, we need to put every 10 pieces of rms value
 // square each of them and multiply by 200,
