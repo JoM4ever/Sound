@@ -1,8 +1,8 @@
 #include "comm.h"
 #include "screen.h"
 #include "sound.h"
-#include<stdio.h>
-#include<math.h>
+#include <stdio.h>
+#include <math.h>
 
 //function definition of printID()
 void printID(char id[]){
