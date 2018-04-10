@@ -4,7 +4,11 @@
 #include <stdio.h>
 #include <math.h>
 
-//function definition of printID()
+/*	function definition of printID()
+	This function would print ID in char type
+	argument: id
+	return : no
+*/
 void printID(char id[]){
 	int i;
 	for(i=0; i<4; i++)
@@ -21,7 +25,7 @@ void dispWAVData(char filename[]){
 	short samples[SAMPLERATE];		//totally 16000 samples in 1 sec
 	WAVHeader mh;		//just used to skip over the header of wav file
 	fp = fopen(filename, "r");
-	if(fp == NULL){
+	if(fp == NULL){			// if cannot open the file, print error
 		printf("Error when openning the file! \n");
 		return;
 	}
@@ -37,7 +41,7 @@ void dispWAVData(char filename[]){
 #ifdef DEBUG
 		printf("rms[%d]: %10.4f, dB= %10.4f\n",i,rms[i], 20*log10(rms[i]));
 #else
-		dispBar(i, 20*log10(rms[i]));		//display dB value 
+		dispBar(i, 20*log10(rms[i]));		//display dB value
 #endif
 	}
 #ifdef COMM
