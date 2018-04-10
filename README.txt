@@ -10,7 +10,7 @@ complication), the sound will be re-calculated into 8 pieces of Fast Level data
 and sent out to a PHP server program.
 
 List of Contents:
-1. configuration instructions
+1. Configuration instructions
 2. Installation instructions
 3. Operating instructions
 4. File manifest
