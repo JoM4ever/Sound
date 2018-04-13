@@ -33,23 +33,26 @@ void dispWAVData(char filename[]){
 	fread(samples, sizeof(short), SAMPLERATE,fp);
 	fclose(fp);
 	clearScreen();
-	for(i=0; i<80; i++){
-		for(j=0, sum=0.0; j<SAMPLERATE/80; ++j){
-			sum += samples[j+i*200]*samples[j+i*200];
+	for(i=0; i<80; i++){			// run 80 loops, each loop has 200 samples
+		for(j=0, sum=0.0; j<SAMPLERATE/80; ++j){		// run 200 samples
+			sum += samples[j+i*200]*samples[j+i*200];		//calculate the sum of 200 samples
 		}
-		rms[i]= sqrt(sum/200);
-#ifdef DEBUG
-		printf("rms[%d]: %10.4f, dB= %10.4f\n",i,rms[i], 20*log10(rms[i]));
-#else
-		dispBar(i, 20*log10(rms[i]));		//display dB value
+		rms[i]= sqrt(sum/200);							// calculate the rms value of the sum of sample
+#ifdef DEBUG			// if DEBUG is enabled
+		printf("rms[%d]: %10.4f, dB= %10.4f\n",i,rms[i], 20*log10(rms[i]));			// print rms value  and dB value
+#else					// if DEBUG is disabled
+		dispBar(i, 20*log10(rms[i]));		//display dB value in a bar type
 #endif
 	}
-#ifdef COMM
-	sendToServer(rms);
+#ifdef COMM				// if COMM is enabled
+	sendToServer(rms);						// send to server data
 #endif
 }
 
-//function definition of dispWAVHeader()
+/*	function definition of dispWAVHeader()
+	This function print the WAVE file format
+	argument : .wav file
+*/
 void dispWAVHeader(char filename[]){
 	FILE *fp;
 	WAVHeader mh;	//an instance of WAVHeader struct
@@ -63,20 +66,20 @@ void dispWAVHeader(char filename[]){
 	fread(&mh, sizeof(mh), 1, fp);
 	fclose(fp);	//close the opened file
 	printf("Chunk ID : ");
-	printID(mh.chunkID);
-	printf("  chunk size: %d\n",mh.chunkSize);
+	printID(mh.chunkID);								//print the chunk ID contains the letter "RIFF" in ASCII form
+	printf("  chunk size: %d\n",mh.chunkSize);			// print chunk size
 	printf("Format: ");
-	printID(mh.format);
+	printID(mh.format);									// print format contains the letter "WAVE"
 	printf("  subchunk 1 ID: ");
-	printID(mh.subchunk1ID);
-	printf("  subchunk 1 size: %d\n",mh.subchunk1Size);
-	printf("  audioFormat: %d\n",mh.audioFormat);
+	printID(mh.subchunk1ID);							// print subchunk ID  contains letter "fmt"
+	printf("  subchunk 1 size: %d\n",mh.subchunk1Size);	// 16 for PCM
+	printf("  audioFormat: %d\n",mh.audioFormat);		// PCM = 1
 	printf("  numChannels: %d\n",mh.numChannels);
 	printf("  sampleRate: %d\n",mh.sampleRate);
 	printf("  byteRate: %d\n",mh.byteRate);
 	printf("  blockAlign: %d\n",mh.blockAlign);
 	printf("  bitsPerSample: %d\n",mh.bitsPerSample);
-	printf("  subchunk 2 ID: ");
+	printf("  subchunk 2 ID: ");						// contains the letter "data"
 	printID(mh.subchunk2ID);
 	printf("  subchunk 2 size: %d\n",mh.subchunk2Size);
 }
